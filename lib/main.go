@@ -36,24 +36,22 @@ func DecodePixelsFromImage(img image.Image, offsetX, offsetY int) []*Pixel {
 	}
 	return pixels
 }
-func WriteImage(img image.Image) {
-	out, err := os.Create("./temp/output.png")
+func WriteImage(img image.Image, outImg string) error {
+	out, err := os.Create(outImg)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	err = png.Encode(out, img)
-	if err != nil {
-		panic(err)
-	}
+	return err
 }
-func MergeImage(imgName string) {
-	img1, _, err := OpenAndDecode("./temp/shirt.jpg")
+func MergeImage(imgName string, beseImg string, outImg string) error {
+	img1, _, err := OpenAndDecode(beseImg)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	img2, _, err := OpenAndDecode(imgName)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	pixels1 := DecodePixelsFromImage(img1, 0, 0)
 	pixels2 := DecodePixelsFromImage(img2, 400-(img2.Bounds().Dx()/2), 300-(img2.Bounds().Dy()/2))
@@ -63,5 +61,6 @@ func MergeImage(imgName string) {
 			img.Set(px.Point.X, px.Point.Y, px.Color)
 		}
 	}
-	WriteImage(img)
+	err = WriteImage(img, outImg)
+	return err
 }

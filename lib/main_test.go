@@ -57,3 +57,29 @@ func TestOpenAndDecode(t *testing.T) {
 		})
 	}
 }
+func TestMergeImage(t *testing.T) {
+	type args struct {
+		imgName string
+		baseImg string
+		outImg  string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+		{"Test MergeImage $1", args{"../temp/a.png", "../temp/shirt.jpg", "../temp/output.jp"}, false},
+		{"Test MergeImage $2", args{"../a.jpg", "../temp/shirt.jpg", "../temp/output.jpg"}, true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			err := MergeImage(tt.args.imgName, tt.args.baseImg, tt.args.outImg)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MergeImage error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+		})
+	}
+}

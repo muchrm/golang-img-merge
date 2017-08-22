@@ -1,0 +1,18 @@
+{
+    "go.buildOnSave": "workspace",
+    "go.lintOnSave": "workspace",
+    "go.vetOnSave": "workspace",
+    "go.buildTags": "",
+    "go.buildFlags": [],
+    "go.lintTool": "gometalinter",
+    "go.lintFlags": ["--disable-all", "--enable=errcheck"],
+    "go.vetFlags": [],
+    "go.coverOnSave": false,
+    "go.useCodeSnippetsOnFunctionSuggest": false,
+    "go.formatOnSave": true, 
+    "go.formatTool": "goreturns",
+    "go.formatFlags": [],
+    "go.goroot": "/usr/local/go",
+    "go.gopath": "/Users/muchrm/go",
+    "go.gocodeAutoBuild": false
+}

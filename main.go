@@ -15,7 +15,7 @@ type Pixel struct {
 
 func (p *Pixel) IsTransparent() bool {
 	_, _, _, alpha := p.Color.RGBA()
-	return alpha == 0
+	return alpha <= 10000
 }
 func OpenAndDecode(filepath string) (image.Image, string, error) {
 	imgFile, err := os.Open(filepath)

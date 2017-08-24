@@ -1,4 +1,4 @@
-package main
+package imgmerge
 
 import (
 	"image"
@@ -43,8 +43,8 @@ func TestOpenAndDecode(t *testing.T) {
 		wantErr bool
 	}{
 		// TODO: Add test cases.
-		{"Test OpenAndDecode $1", "./temp/shirt.jpg", false},
-		{"Test OpenAndDecode $2", "./shirt.jpg", true},
+		{"Test OpenAndDecode $1", "../temp/shirt.jpg", false},
+		{"Test OpenAndDecode $2", "../shirt.jpg", true},
 	}
 
 	for _, tt := range tests {
@@ -69,8 +69,8 @@ func TestMergeImage(t *testing.T) {
 		wantErr bool
 	}{
 		// TODO: Add test cases.
-		{"Test MergeImage $1", args{"./temp/a.png", "./temp/shirt.jpg", "./temp/output.jpg"}, false},
-		{"Test MergeImage $2", args{"./a.jpg", "./temp/shirt.jpg", "./temp/output2.jpg"}, true},
+		{"Test MergeImage $1", args{"../temp/a.png", "../temp/shirt.jpg", "../temp/output.jpg"}, false},
+		{"Test MergeImage $2", args{"../a.jpg", "../temp/shirt.jpg", "../temp/output2.jpg"}, true},
 	}
 
 	for _, tt := range tests {

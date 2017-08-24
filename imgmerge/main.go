@@ -3,6 +3,7 @@ package imgmerge
 import (
 	"image"
 	"image/color"
+	"image/draw"
 	"image/png"
 	"os"
 )
@@ -60,6 +61,7 @@ func MergeImage(imgName string, beseImg string, outImg string) error {
 			img.Set(px.Point.X, px.Point.Y, px.Color)
 		}
 	}
+	draw.Draw(img, img.Bounds(), img, image.Point{0, 0}, draw.Src)
 	err = WriteImage(img, outImg)
 	return err
 }

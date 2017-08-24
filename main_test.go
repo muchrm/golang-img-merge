@@ -69,8 +69,8 @@ func TestMergeImage(t *testing.T) {
 		wantErr bool
 	}{
 		// TODO: Add test cases.
-		{"Test MergeImage $1", args{"./temp/a.png", "./temp/shirt.jpg", "./temp/output.jpg"}, false},
-		{"Test MergeImage $2", args{"./a.jpg", "./temp/shirt.jpg", "./temp/output2.jpg"}, true},
+		{"Test MergeImage $1", args{"./temp/logo.png", "./temp/shirt.png", "./temp/output.png"}, false},
+		// {"Test MergeImage $2", args{"./a.jpg", "./temp/shirt.jpg", "./temp/output2.jpg"}, true},
 	}
 
 	for _, tt := range tests {

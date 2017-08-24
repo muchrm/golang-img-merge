@@ -3,7 +3,7 @@ package main
 import (
 	"image"
 	"image/color"
-	_ "image/jpeg"
+	"image/draw"
 	"image/png"
 	"os"
 )
@@ -36,7 +36,8 @@ func DecodePixelsFromImage(img image.Image, offsetX, offsetY int) []*Pixel {
 	}
 	return pixels
 }
-func WriteImage(img image.Image, outImg string) error {
+func WriteImage(img draw.Image, outImg string) error {
+	draw.Draw(img, img.Bounds(), img, image.Point{0, 0}, draw.Src)
 	out, err := os.Create(outImg)
 	if err != nil {
 		return err
@@ -54,8 +55,8 @@ func MergeImage(imgName string, beseImg string, outImg string) error {
 		return err
 	}
 	pixels1 := DecodePixelsFromImage(img1, 0, 0)
-	pixels2 := DecodePixelsFromImage(img2, 400-(img2.Bounds().Dx()/2), 300-(img2.Bounds().Dy()/2))
-	img := image.NewRGBA(image.Rect(0, 0, 800, 600))
+	pixels2 := DecodePixelsFromImage(img2, (img1.Bounds().Dx()/2)-(img2.Bounds().Dx()/2), (img1.Bounds().Dy()/3)-(img2.Bounds().Dy()/2))
+	img := image.NewRGBA(image.Rect(0, 0, img1.Bounds().Dx(), img1.Bounds().Dy()))
 	for _, px := range append(pixels1, pixels2...) {
 		if !px.IsTransparent() {
 			img.Set(px.Point.X, px.Point.Y, px.Color)

@@ -1,6 +1,7 @@
 package imgmerge
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"testing"
@@ -58,28 +59,23 @@ func TestOpenAndDecode(t *testing.T) {
 	}
 }
 func TestMergeImage(t *testing.T) {
-	type args struct {
-		imgName string
-		baseImg string
-		outImg  string
-	}
-	tests := []struct {
-		name    string
-		args    args
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-		{"Test MergeImage $1", args{"../temp/a.png", "../temp/shirt.jpg", "../temp/output.jpg"}, false},
-		{"Test MergeImage $2", args{"../a.jpg", "../temp/shirt.jpg", "../temp/output2.jpg"}, true},
+	imgs := []string{
+		"temp/1.png",
+		"temp/2.png",
+		"temp/3.png",
+		"temp/4.png",
+		"temp/5.png",
+		"temp/6.png",
+		"temp/7.png",
+		"temp/8.png",
+		"temp/9.png",
+		"temp/10.png",
+		"temp/11.png",
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			err := MergeImage(tt.args.imgName, tt.args.baseImg, tt.args.outImg)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("MergeImage error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
+	for i, img := range imgs {
+		t.Run("", func(t *testing.T) {
+			MergeImage(img, "temp/shirt.png", fmt.Sprintf("%s%d%s", "temp/out", i, ".png"))
 		})
 	}
 }

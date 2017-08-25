@@ -1,67 +1,27 @@
 package main
 
 import (
-	"image"
-	"image/color"
-	"image/draw"
-	"image/png"
-	"os"
+	"fmt"
+
+	"github.com/muchrm/golang-img-merge/imgmerge"
 )
 
-type Pixel struct {
-	Point image.Point
-	Color color.Color
-}
+func main() {
+	imgs := []string{
+		"temp/1.png",
+		"temp/2.png",
+		"temp/3.png",
+		"temp/4.png",
+		"temp/5.png",
+		"temp/6.png",
+		"temp/7.png",
+		"temp/8.png",
+		"temp/9.png",
+		"temp/10.png",
+		"temp/11.png",
+	}
+	for i, img := range imgs {
+		imgmerge.MergeImage(img, "temp/shirt.png", fmt.Sprintf("%s%d%s", "temp/out", i, ".png"))
+	}
 
-func (p *Pixel) IsTransparent() bool {
-	_, _, _, alpha := p.Color.RGBA()
-	return alpha <= 30000
-}
-func OpenAndDecode(filepath string) (image.Image, string, error) {
-	imgFile, err := os.Open(filepath)
-	img, format, err := image.Decode(imgFile)
-	imgFile.Close()
-	return img, format, err
-}
-func DecodePixelsFromImage(img image.Image, offsetX, offsetY int) []*Pixel {
-	pixels := []*Pixel{}
-	for y := 0; y <= img.Bounds().Max.Y; y++ {
-		for x := 0; x <= img.Bounds().Max.X; x++ {
-			p := &Pixel{
-				Point: image.Point{x + offsetX, y + offsetY},
-				Color: img.At(x, y),
-			}
-			pixels = append(pixels, p)
-		}
-	}
-	return pixels
-}
-func WriteImage(img draw.Image, outImg string) error {
-	draw.Draw(img, img.Bounds(), img, image.Point{0, 0}, draw.Src)
-	out, err := os.Create(outImg)
-	if err != nil {
-		return err
-	}
-	err = png.Encode(out, img)
-	return err
-}
-func MergeImage(imgName string, beseImg string, outImg string) error {
-	img1, _, err := OpenAndDecode(beseImg)
-	if err != nil {
-		return err
-	}
-	img2, _, err := OpenAndDecode(imgName)
-	if err != nil {
-		return err
-	}
-	pixels1 := DecodePixelsFromImage(img1, 0, 0)
-	pixels2 := DecodePixelsFromImage(img2, (img1.Bounds().Dx()/2)-(img2.Bounds().Dx()/2), (img1.Bounds().Dy()/3)-(img2.Bounds().Dy()/2))
-	img := image.NewRGBA(image.Rect(0, 0, img1.Bounds().Dx(), img1.Bounds().Dy()))
-	for _, px := range append(pixels1, pixels2...) {
-		if !px.IsTransparent() {
-			img.Set(px.Point.X, px.Point.Y, px.Color)
-		}
-	}
-	err = WriteImage(img, outImg)
-	return err
 }
